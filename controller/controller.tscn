@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://chu3j83a31se3"]
+
+[ext_resource type="Script" path="res://controller/controller.gd" id="1_3uglf"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_3uglf")
+
+[node name="LeftLabel" type="Label" parent="."]
+offset_right = 67.0
+offset_bottom = 26.0
+text = "Left Side"
+
+[node name="RightLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Right Side"
