@@ -15,6 +15,10 @@ run/main_scene="res://controller/controller.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PersistentData="*res://autoload/PersistentData.tscn"
+
 [display]
 
 window/size/viewport_width=240

@@ -6,14 +6,7 @@ var screenWidthMiddle
 var frameTimer = Timer.new()
 var leftFingerPosition
 var rightFingerPosition
-const UP = "up"
-const DOWN = "down"
-const LEFT = "left"
-const RIGHT = "right"
-var leftX
-var leftY
-var rightX
-var rightY
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Screen width: ", get_viewport_rect().size.x)
@@ -33,17 +26,17 @@ func _evaluate_move():
 		leftTouchPositions.remove_at(0)
 	if null not in leftTouchPositions:
 		if leftTouchPositions[1].x > leftTouchPositions[0].x:
-			leftX = RIGHT
+			PersistentData.leftX = PersistentData.RIGHT
 		elif leftTouchPositions[1].x < leftTouchPositions[0].x:
-			leftX = LEFT
+			PersistentData.leftX = PersistentData.LEFT
 		else:
-			leftX = null
+			PersistentData.leftX = PersistentData.TAP
 		if leftTouchPositions[1].y > leftTouchPositions[0].y:
-			leftY = DOWN
+			PersistentData.leftY = PersistentData.DOWN
 		elif leftTouchPositions[1].y < leftTouchPositions[0].y: 
-			leftY = UP
+			PersistentData.leftY = PersistentData.UP
 		else:
-			leftY = null
+			PersistentData.leftY = PersistentData.TAP
 	## Evaluate right move
 	if rightFingerPosition != rightTouchPositions[1]:
 		rightTouchPositions.append(rightFingerPosition)
@@ -51,21 +44,21 @@ func _evaluate_move():
 		rightTouchPositions.remove_at(0)
 	if null not in rightTouchPositions:
 		if rightTouchPositions[1].x > rightTouchPositions[0].x:
-			rightX = RIGHT
+			PersistentData.rightX = PersistentData.RIGHT
 		elif rightTouchPositions[1].x < rightTouchPositions[0].x: 
-			rightX = LEFT
+			PersistentData.rightX = PersistentData.LEFT
 		else:
-			rightX = null
+			PersistentData.rightX = PersistentData.TAP
 		if rightTouchPositions[1].y > rightTouchPositions[0].y:
-			rightY = DOWN
+			PersistentData.rightY = PersistentData.DOWN
 		elif rightTouchPositions[1].y < rightTouchPositions[0].y: 
-			rightY = UP
+			PersistentData.rightY = PersistentData.UP
 		else:
-			rightY = null
-	print("left side: ", leftX, ", ", leftY)
-	print("right side: ", rightX, ", ", rightY)
-	$LeftLabel.text = "{x} \n {y}".format({"x":leftX,"y":leftY})
-	$RightLabel.text = "{x} \n {y}".format({"x":rightX,"y":rightY})
+			PersistentData.rightY = PersistentData.TAP
+	print("left side: ", PersistentData.leftX, ", ", PersistentData.leftY)
+	print("right side: ", PersistentData.rightX, ", ", PersistentData.rightY)
+	$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
+	$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
 	#if leftTouchPositions[1].x > leftTouchPositions[0].x:
 	#	$LeftLabel.text = "Left screen: swipe left"
 func _unhandled_input(event):
@@ -79,12 +72,12 @@ func _unhandled_input(event):
 	elif event is InputEventScreenTouch and event.is_pressed():
 		if event.position.x < screenWidthMiddle:
 			leftTouchPositions = [null,null]
-			leftX = null
-			leftY = null
+			PersistentData.leftX = PersistentData.TAP
+			PersistentData.leftY = PersistentData.TAP
 		else:
 			rightTouchPositions = [null,null]
-			rightX = null
-			rightY = null
+			PersistentData.rightX = PersistentData.TAP
+			PersistentData.rightY = PersistentData.TAP
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

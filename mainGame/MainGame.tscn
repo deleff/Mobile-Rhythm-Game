@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnqhwgdw6ce5u"]
+
+[ext_resource type="Script" path="res://mainGame/MainGame.gd" id="1_jefpd"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_jefpd")
