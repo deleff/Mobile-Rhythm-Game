@@ -19,7 +19,9 @@ var randomNumberGenerator = RandomNumberGenerator.new()
 func _ready():
 	add_child(beatTimer)
 	beatTimer.one_shot = false
-	beatTimer.start(0.5)
+	$SongsAudioStreamPlayer2D.stream = load("res://music/Heaven.mp3")
+	beatTimer.start(1)
+	$SongsAudioStreamPlayer2D.play()
 	beatTimer.timeout.connect(_on_beat_timer_timeout)
 	$ArrowSpriteLeft2D.global_position.x = (get_viewport_rect().size.x / 3)
 	$ArrowSpriteLeft2D.global_position.y = (get_viewport_rect().size.y / 2)
