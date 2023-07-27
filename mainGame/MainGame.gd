@@ -27,6 +27,10 @@ func _ready():
 	$ArrowSpriteRight2D.global_position.y = (get_viewport_rect().size.y / 2)
 
 func _on_beat_timer_timeout():
+	## Get player input from last turn
+	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
+		PersistentData.playerScore += 1
+
 	## Reset player input
 	$Controller.reset_controller_positions()
 	
@@ -114,9 +118,6 @@ func _on_beat_timer_timeout():
 	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
 	print("Controller left: ", PersistentData.leftX, ", ", PersistentData.leftY)
 	print("Controller right: ", PersistentData.rightX, ", ", PersistentData.rightY)
-	
-	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
-		PersistentData.playerScore += 1
 	
 	## Display the score
 	$ScoreLabel.text = "Score: {playerScore}".format({"playerScore":PersistentData.playerScore})
