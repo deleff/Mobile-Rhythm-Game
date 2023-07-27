@@ -13,21 +13,30 @@ var arrowRightX: String
 var arrowRightY: String
 
 var beatTimer = Timer.new()
+var introTimer = Timer.new()
 var randomNumberGenerator = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$ArrowSpriteLeft2D.visible = false
+	$ArrowSpriteRight2D.visible = false
+	add_child(introTimer)
+	introTimer.one_shot = true
 	add_child(beatTimer)
 	beatTimer.one_shot = false
 	$SongsAudioStreamPlayer2D.stream = load("res://music/Heaven.mp3")
-	beatTimer.start(1)
+	introTimer.start(15)
 	$SongsAudioStreamPlayer2D.play()
+	introTimer.timeout.connect(_on_intro_timer_timeout)
 	beatTimer.timeout.connect(_on_beat_timer_timeout)
 	$ArrowSpriteLeft2D.global_position.x = (get_viewport_rect().size.x / 3)
 	$ArrowSpriteLeft2D.global_position.y = (get_viewport_rect().size.y / 2)
 	$ArrowSpriteRight2D.global_position.x = 2 * (get_viewport_rect().size.x / 3)
 	$ArrowSpriteRight2D.global_position.y = (get_viewport_rect().size.y / 2)
 
+func _on_intro_timer_timeout():
+	beatTimer.start(0.43)
+	
 func _on_beat_timer_timeout():
 	## Get player input from last turn
 	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
@@ -42,13 +51,16 @@ func _on_beat_timer_timeout():
 	## Reset player input
 	$Controller.reset_controller_positions()
 	
-	## Reset arrow direction
+	## Reset arrows
 	arrowLeftX = PersistentData.RIGHT
-	$ArrowSpriteLeft2D.visible = false
-	$ArrowSpriteRight2D.visible = false
+	#$ArrowSpriteLeft2D.visible = false
+	#$ArrowSpriteRight2D.visible = false
+	#$ArrowSpriteLeft2D.texture = load("res://sprites/arrow.png")
+	#$ArrowSpriteRight2D.texture = load("res://sprites/arrow.png")
+
 	while arrowChoicePrevious == arrowChoice:
 		randomNumberGenerator.randomize()
-		arrowChoice = randomNumberGenerator.randi_range(0,8)
+		arrowChoice = randomNumberGenerator.randi_range(0,7)
 
 	match arrowChoice:
 		0:
@@ -84,8 +96,8 @@ func _on_beat_timer_timeout():
 			arrowX = PersistentData.LEFT
 			arrowY = PersistentData.UP
 		8:
-			$ArrowSpriteLeft2D.visible = false
-			$ArrowSpriteRight2D.visible = false
+			$ArrowSpriteLeft2D.texture = load("res://sprites/tap.png")
+			$ArrowSpriteRight2D.texture = load("res://sprites/tap.png")
 			arrowLeftX = PersistentData.TAP
 			arrowLeftY = PersistentData.TAP
 			arrowRightX = PersistentData.TAP
