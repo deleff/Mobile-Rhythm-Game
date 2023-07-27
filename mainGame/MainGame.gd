@@ -16,6 +16,8 @@ var beatTimer = Timer.new()
 var introTimer = Timer.new()
 var randomNumberGenerator = RandomNumberGenerator.new()
 
+var score_file = "user://highscore.save"
+var highScore
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$ArrowSpriteLeft2D.visible = false
@@ -33,9 +35,26 @@ func _ready():
 	$ArrowSpriteLeft2D.global_position.y = (get_viewport_rect().size.y / 2)
 	$ArrowSpriteRight2D.global_position.x = 2 * (get_viewport_rect().size.x / 3)
 	$ArrowSpriteRight2D.global_position.y = (get_viewport_rect().size.y / 2)
+	_load_score()
+
+
+func _load_score():
+	if FileAccess.file_exists(score_file):
+		print("Score file exists")
+		var file = FileAccess.open(score_file, FileAccess.READ)
+		highScore = file.get_var()
+	else:
+		print("Score file does not exist")
+		highScore = 0
+	print("High score: ", highScore)
+
+func _save_score(content):
+	var file = FileAccess.open(score_file, FileAccess.WRITE)
+	print("Saving new high score: ", highScore)
+	file.store_var(content)
 
 func _on_intro_timer_timeout():
-	beatTimer.start(0.43)
+	beatTimer.start(0.435)
 	
 func _on_beat_timer_timeout():
 	## Get player input from last turn
@@ -133,8 +152,11 @@ func _on_beat_timer_timeout():
 	$ArrowSpriteRight2D.rotation_degrees = arrowDirection
 	
 	arrowChoicePrevious = arrowChoice	
-	## Display the score
-	$ScoreLabel.text = "Score: {playerScore}".format({"playerScore":PersistentData.playerScore})
+	## Update and display the score
+	if PersistentData.playerScore > highScore:
+		highScore = PersistentData.playerScore
+		_save_score(highScore)
+	$ScoreLabel.text = "Score: {playerScore}, High Score: {highScore}".format({"playerScore":PersistentData.playerScore, "highScore": highScore})
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
