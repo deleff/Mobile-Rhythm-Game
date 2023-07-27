@@ -33,6 +33,12 @@ func _on_beat_timer_timeout():
 	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
 		PersistentData.playerScore += 1
 
+	print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
+	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
+	print("Controller left: ", PersistentData.leftX, ", ", PersistentData.leftY)
+	print("Controller right: ", PersistentData.rightX, ", ", PersistentData.rightY)
+
+
 	## Reset player input
 	$Controller.reset_controller_positions()
 	
@@ -43,11 +49,11 @@ func _on_beat_timer_timeout():
 	while arrowChoicePrevious == arrowChoice:
 		randomNumberGenerator.randomize()
 		arrowChoice = randomNumberGenerator.randi_range(0,8)
-		print("new: ", arrowChoice, ", old: ", arrowChoicePrevious)
+
 	match arrowChoice:
 		0:
 			arrowDirection = 0
-			arrowX = PersistentData.UP
+			arrowX = PersistentData.TAP
 			arrowY = PersistentData.UP
 		1:
 			arrowDirection = 45
@@ -56,14 +62,14 @@ func _on_beat_timer_timeout():
 		2:
 			arrowDirection = 90
 			arrowX = PersistentData.RIGHT
-			arrowY = PersistentData.RIGHT
+			arrowY = PersistentData.TAP
 		3:
 			arrowDirection = 135
 			arrowX = PersistentData.RIGHT
 			arrowY = PersistentData.DOWN
 		4:
 			arrowDirection = 180
-			arrowX = PersistentData.DOWN
+			arrowX = PersistentData.TAP
 			arrowY = PersistentData.DOWN
 		5:
 			arrowDirection = 225
@@ -72,7 +78,7 @@ func _on_beat_timer_timeout():
 		6:
 			arrowDirection = 270
 			arrowX = PersistentData.LEFT
-			arrowY = PersistentData.LEFT
+			arrowY = PersistentData.TAP
 		7:
 			arrowDirection = 315
 			arrowX = PersistentData.LEFT
@@ -114,13 +120,7 @@ func _on_beat_timer_timeout():
 	$ArrowSpriteLeft2D.rotation_degrees = arrowDirection
 	$ArrowSpriteRight2D.rotation_degrees = arrowDirection
 	
-	arrowChoicePrevious = arrowChoice
-
-	print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
-	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
-	print("Controller left: ", PersistentData.leftX, ", ", PersistentData.leftY)
-	print("Controller right: ", PersistentData.rightX, ", ", PersistentData.rightY)
-	
+	arrowChoicePrevious = arrowChoice	
 	## Display the score
 	$ScoreLabel.text = "Score: {playerScore}".format({"playerScore":PersistentData.playerScore})
 
