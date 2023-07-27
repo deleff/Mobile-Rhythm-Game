@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnqhwgdw6ce5u"]
+[gd_scene load_steps=3 format=3 uid="uid://cnqhwgdw6ce5u"]
 
 [ext_resource type="Script" path="res://mainGame/MainGame.gd" id="1_jefpd"]
+[ext_resource type="Texture2D" uid="uid://clx2p6v553bkt" path="res://sprites/arrow.png" id="2_to4y8"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_jefpd")
+
+[node name="ArrowSpriteLeft2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_to4y8")
+
+[node name="ArrowSpriteRight2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_to4y8")
