@@ -28,7 +28,7 @@ func _ready():
 
 func _on_beat_timer_timeout():
 	## Reset player input
-	#$Controller.reset_controller_positions()
+	$Controller.reset_controller_positions()
 	
 	## Reset arrow direction
 	arrowLeftX = PersistentData.RIGHT
