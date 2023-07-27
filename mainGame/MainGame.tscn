@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnqhwgdw6ce5u"]
+[gd_scene load_steps=4 format=3 uid="uid://cnqhwgdw6ce5u"]
 
 [ext_resource type="Script" path="res://mainGame/MainGame.gd" id="1_jefpd"]
 [ext_resource type="Texture2D" uid="uid://clx2p6v553bkt" path="res://sprites/arrow.png" id="2_to4y8"]
+[ext_resource type="PackedScene" uid="uid://ef2xdf2xefwo" path="res://controller.tscn" id="3_mxwu6"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_jefpd")
@@ -13,3 +14,20 @@ texture = ExtResource("2_to4y8")
 [node name="ArrowSpriteRight2D" type="Sprite2D" parent="."]
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("2_to4y8")
+
+[node name="Controller" parent="." instance=ExtResource("3_mxwu6")]
+
+[node name="LeftLabel" type="Label" parent="Controller"]
+offset_right = 67.0
+offset_bottom = 26.0
+text = "Left Side"
+
+[node name="RightLabel" type="Label" parent="Controller"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Right Side"
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_top = 138.0
+offset_right = 40.0
+offset_bottom = 161.0

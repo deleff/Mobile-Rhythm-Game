@@ -6,6 +6,7 @@ var screenWidthMiddle
 var frameTimer = Timer.new()
 var leftFingerPosition
 var rightFingerPosition
+var straightLineInPixels = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,22 +19,34 @@ func _ready():
 	frameTimer.start(0.016666)
 	frameTimer.timeout.connect(_evaluate_move)
 
+func reset_controller_positions():
+	leftTouchPositions = [null,null]
+	rightTouchPositions = [null,null]
+	PersistentData.leftX = ""
+	PersistentData.leftY = ""
+	PersistentData.rightX = ""
+	PersistentData.rightY = ""
+
 func _evaluate_move():
+	## Print current values:
+	$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
+	$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
+	
 	## Evaluate left move
 	if leftFingerPosition != leftTouchPositions[1]:
 		leftTouchPositions.append(leftFingerPosition)
 	while leftTouchPositions.size() > 2:
 		leftTouchPositions.remove_at(0)
 	if null not in leftTouchPositions:
-		if leftTouchPositions[1].x > leftTouchPositions[0].x:
+		if leftTouchPositions[1].x - leftTouchPositions[0].x > straightLineInPixels:
 			PersistentData.leftX = PersistentData.RIGHT
-		elif leftTouchPositions[1].x < leftTouchPositions[0].x:
+		elif leftTouchPositions[0].x - leftTouchPositions[1].x > straightLineInPixels:
 			PersistentData.leftX = PersistentData.LEFT
 		else:
 			PersistentData.leftX = PersistentData.TAP
-		if leftTouchPositions[1].y > leftTouchPositions[0].y:
+		if leftTouchPositions[1].y - leftTouchPositions[0].y > straightLineInPixels:
 			PersistentData.leftY = PersistentData.DOWN
-		elif leftTouchPositions[1].y < leftTouchPositions[0].y: 
+		elif leftTouchPositions[0].y - leftTouchPositions[1].y > straightLineInPixels: 
 			PersistentData.leftY = PersistentData.UP
 		else:
 			PersistentData.leftY = PersistentData.TAP
@@ -43,20 +56,20 @@ func _evaluate_move():
 	while rightTouchPositions.size() > 2:
 		rightTouchPositions.remove_at(0)
 	if null not in rightTouchPositions:
-		if rightTouchPositions[1].x > rightTouchPositions[0].x:
+		if rightTouchPositions[1].x - rightTouchPositions[0].x > straightLineInPixels:
 			PersistentData.rightX = PersistentData.RIGHT
-		elif rightTouchPositions[1].x < rightTouchPositions[0].x: 
+		elif rightTouchPositions[0].x - rightTouchPositions[1].x > straightLineInPixels: 
 			PersistentData.rightX = PersistentData.LEFT
 		else:
 			PersistentData.rightX = PersistentData.TAP
-		if rightTouchPositions[1].y > rightTouchPositions[0].y:
+		if rightTouchPositions[1].y - rightTouchPositions[0].y > straightLineInPixels:
 			PersistentData.rightY = PersistentData.DOWN
-		elif rightTouchPositions[1].y < rightTouchPositions[0].y: 
+		elif rightTouchPositions[0].y - rightTouchPositions[1].y > straightLineInPixels: 
 			PersistentData.rightY = PersistentData.UP
 		else:
 			PersistentData.rightY = PersistentData.TAP
-	print("left side: ", PersistentData.leftX, ", ", PersistentData.leftY)
-	print("right side: ", PersistentData.rightX, ", ", PersistentData.rightY)
+	#print("left side: ", PersistentData.leftX, ", ", PersistentData.leftY)
+	#print("right side: ", PersistentData.rightX, ", ", PersistentData.rightY)
 	$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
 	$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
 	#if leftTouchPositions[1].x > leftTouchPositions[0].x:
