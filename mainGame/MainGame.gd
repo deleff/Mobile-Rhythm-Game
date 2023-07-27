@@ -54,7 +54,7 @@ func _save_score(content):
 	file.store_var(content)
 
 func _on_intro_timer_timeout():
-	beatTimer.start(2 * 0.435)
+	beatTimer.start(0.435)
 	
 func _on_beat_timer_timeout():
 	## Get player input from last turn
