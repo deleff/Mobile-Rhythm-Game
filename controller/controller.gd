@@ -16,7 +16,7 @@ func _ready():
 	$RightLabel.global_position.x = screenWidthMiddle
 	add_child(frameTimer)
 	frameTimer.one_shot = false
-	frameTimer.start(0.5 * 0.016666)
+	frameTimer.start(0.016666)
 	frameTimer.timeout.connect(_evaluate_move)
 
 func reset_controller_positions():

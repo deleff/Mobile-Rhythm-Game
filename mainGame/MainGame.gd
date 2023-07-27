@@ -12,6 +12,11 @@ var arrowLeftY:  String
 var arrowRightX: String
 var arrowRightY: String
 
+var arrowLeftXPrevious:  String
+var arrowLeftYPrevious:  String
+var arrowRightXPrevious: String
+var arrowRightYPrevious: String
+
 var beatTimer = Timer.new()
 var introTimer = Timer.new()
 var randomNumberGenerator = RandomNumberGenerator.new()
@@ -60,9 +65,13 @@ func _on_beat_timer_timeout():
 	## Get player input from last turn
 	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
 		PersistentData.playerScore += 1
+	elif arrowLeftXPrevious == PersistentData.leftX and arrowLeftYPrevious == PersistentData.leftY and arrowRightXPrevious == PersistentData.rightX and arrowRightYPrevious == PersistentData.rightY:
+		PersistentData.playerScore += 1
 
 	print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
 	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
+	print("Previous left arrow: ", arrowLeftXPrevious, ", ", arrowLeftYPrevious)
+	print("Previous right arrow: ", arrowRightXPrevious, ", ", arrowRightYPrevious)
 	print("Controller left: ", PersistentData.leftX, ", ", PersistentData.leftY)
 	print("Controller right: ", PersistentData.rightX, ", ", PersistentData.rightY)
 
@@ -71,6 +80,11 @@ func _on_beat_timer_timeout():
 	$Controller.reset_controller_positions()
 	
 	## Reset arrows
+	arrowLeftXPrevious = arrowLeftX
+	arrowLeftYPrevious = arrowLeftY
+	arrowRightXPrevious = arrowRightX
+	arrowRightYPrevious = arrowRightY
+	
 	arrowLeftX = PersistentData.RIGHT
 	#$ArrowSpriteLeft2D.visible = false
 	#$ArrowSpriteRight2D.visible = false
