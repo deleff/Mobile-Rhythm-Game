@@ -8,9 +8,7 @@ script = ExtResource("1_3uglf")
 [node name="LeftLabel" type="Label" parent="."]
 offset_right = 67.0
 offset_bottom = 26.0
-text = "Left Side"
 
 [node name="RightLabel" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "Right Side"

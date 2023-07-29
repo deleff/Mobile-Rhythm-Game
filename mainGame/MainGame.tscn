@@ -8,7 +8,7 @@
 background_mode = 3
 glow_enabled = true
 glow_normalized = true
-glow_intensity = 3.0
+glow_intensity = 1.5
 glow_bloom = 0.2
 glow_blend_mode = 0
 glow_hdr_threshold = 0.03
@@ -28,11 +28,13 @@ texture = ExtResource("2_to4y8")
 [node name="Controller" parent="." instance=ExtResource("3_mxwu6")]
 
 [node name="LeftLabel" type="Label" parent="Controller"]
+visible = false
 offset_right = 67.0
 offset_bottom = 26.0
 text = "Left Side"
 
 [node name="RightLabel" type="Label" parent="Controller"]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Right Side"

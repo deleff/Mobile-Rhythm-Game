@@ -29,8 +29,8 @@ func reset_controller_positions():
 
 func _evaluate_move():
 	## Print current values:
-	$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
-	$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
+	#$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
+	#$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
 	
 	## Evaluate left move
 	if leftFingerPosition != leftTouchPositions[1]:
@@ -70,8 +70,8 @@ func _evaluate_move():
 			PersistentData.rightY = PersistentData.TAP
 	#print("left side: ", PersistentData.leftX, ", ", PersistentData.leftY)
 	#print("right side: ", PersistentData.rightX, ", ", PersistentData.rightY)
-	$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
-	$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
+	#$LeftLabel.text = "{x} \n {y}".format({"x":PersistentData.leftX,"y":PersistentData.leftY})
+	#$RightLabel.text = "{x} \n {y}".format({"x":PersistentData.rightX,"y":PersistentData.rightY})
 	#if leftTouchPositions[1].x > leftTouchPositions[0].x:
 	#	$LeftLabel.text = "Left screen: swipe left"
 func _unhandled_input(event):

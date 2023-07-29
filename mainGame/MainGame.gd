@@ -64,19 +64,24 @@ func _save_score(content):
 
 func _on_effects_timer_timeout():
 	effectsIterator += 1
-	if effectsIterator == 15:
+	if effectsIterator == 14:
 		$SfxAudioStreamPlayer2D.stream = load("res://sfx/ready.mp3")
 		$SfxAudioStreamPlayer2D.play()
 	elif effectsIterator == 16:
+		$SfxAudioStreamPlayer2D.stream = load("res://sfx/go.mp3")
 		beatTimer.start(0.435)
-	elif effectsIterator == 349:
+		$SfxAudioStreamPlayer2D.play()
+	elif effectsIterator == 214:
 		if playerScore == highScore:
 			$SfxAudioStreamPlayer2D.stream = load("res://sfx/new_record.mp3")
 		else:
 			$SfxAudioStreamPlayer2D.stream = load("res://sfx/complete.mp3")
+	elif effectsIterator == 215:
 		$SfxAudioStreamPlayer2D.play()
 		beatTimer.stop()
-	
+		$ArrowSpriteLeft2D.visible = false
+		$ArrowSpriteRight2D.visible = false
+	print("effectsIterator: ", effectsIterator)
 func _on_beat_timer_timeout():
 	## Get player input from last turn
 	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY or arrowLeftXPrevious == PersistentData.leftX and arrowLeftYPrevious == PersistentData.leftY and arrowRightXPrevious == PersistentData.rightX and arrowRightYPrevious == PersistentData.rightY:
@@ -97,13 +102,13 @@ func _on_beat_timer_timeout():
 			$SfxAudioStreamPlayer2D.play()
 
 
-
-	print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
-	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
-	print("Previous left arrow: ", arrowLeftXPrevious, ", ", arrowLeftYPrevious)
-	print("Previous right arrow: ", arrowRightXPrevious, ", ", arrowRightYPrevious)
-	print("Controller left: ", PersistentData.leftX, ", ", PersistentData.leftY)
-	print("Controller right: ", PersistentData.rightX, ", ", PersistentData.rightY)
+	## Debugging
+	#print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
+	#print("Right arrow: ", arrowRightX, ", ", arrowRightY)
+	#print("Previous left arrow: ", arrowLeftXPrevious, ", ", arrowLeftYPrevious)
+	#print("Previous right arrow: ", arrowRightXPrevious, ", ", arrowRightYPrevious)
+	#print("Controller left: ", PersistentData.leftX, ", ", PersistentData.leftY)
+	#print("Controller right: ", PersistentData.rightX, ", ", PersistentData.rightY)
 
 
 	## Reset player input
@@ -118,12 +123,12 @@ func _on_beat_timer_timeout():
 	arrowLeftX = PersistentData.RIGHT
 	#$ArrowSpriteLeft2D.visible = false
 	#$ArrowSpriteRight2D.visible = false
-	#$ArrowSpriteLeft2D.texture = load("res://sprites/arrow.png")
-	#$ArrowSpriteRight2D.texture = load("res://sprites/arrow.png")
+	$ArrowSpriteLeft2D.texture = load("res://sprites/arrow.png")
+	$ArrowSpriteRight2D.texture = load("res://sprites/arrow.png")
 
 	while arrowChoicePrevious == arrowChoice:
 		randomNumberGenerator.randomize()
-		arrowChoice = randomNumberGenerator.randi_range(0,7)
+		arrowChoice = randomNumberGenerator.randi_range(0,8)
 
 	match arrowChoice:
 		0:
@@ -159,38 +164,36 @@ func _on_beat_timer_timeout():
 			arrowX = PersistentData.LEFT
 			arrowY = PersistentData.UP
 		8:
+			arrowDirection = 0
 			$ArrowSpriteLeft2D.texture = load("res://sprites/tap.png")
 			$ArrowSpriteRight2D.texture = load("res://sprites/tap.png")
-			arrowLeftX = PersistentData.TAP
-			arrowLeftY = PersistentData.TAP
-			arrowRightX = PersistentData.TAP
-			arrowRightY = PersistentData.TAP
+			arrowX = PersistentData.TAP
+			arrowY = PersistentData.TAP
 			
-	if arrowLeftX != PersistentData.TAP:
-		randomNumberGenerator.randomize()
-		arrowVisibility = randomNumberGenerator.randi_range(0,2)
-		match arrowVisibility:
-			0:
-				$ArrowSpriteLeft2D.visible = true
-				arrowLeftX = arrowX
-				arrowLeftY = arrowY
-				$ArrowSpriteRight2D.visible = false
-				arrowRightX = ""
-				arrowRightY = ""
-			1:
-				$ArrowSpriteLeft2D.visible = false
-				arrowLeftX = ""
-				arrowLeftY = ""
-				$ArrowSpriteRight2D.visible = true
-				arrowRightX = arrowX
-				arrowRightY = arrowY
-			2:
-				$ArrowSpriteLeft2D.visible = true
-				arrowLeftX = arrowX
-				arrowLeftY = arrowY
-				$ArrowSpriteRight2D.visible = true
-				arrowRightX = arrowX
-				arrowRightY = arrowY
+	randomNumberGenerator.randomize()
+	arrowVisibility = randomNumberGenerator.randi_range(0,2)
+	match arrowVisibility:
+		0:
+			$ArrowSpriteLeft2D.visible = true
+			arrowLeftX = arrowX
+			arrowLeftY = arrowY
+			$ArrowSpriteRight2D.visible = false
+			arrowRightX = ""
+			arrowRightY = ""
+		1:
+			$ArrowSpriteLeft2D.visible = false
+			arrowLeftX = ""
+			arrowLeftY = ""
+			$ArrowSpriteRight2D.visible = true
+			arrowRightX = arrowX
+			arrowRightY = arrowY
+		2:
+			$ArrowSpriteLeft2D.visible = true
+			arrowLeftX = arrowX
+			arrowLeftY = arrowY
+			$ArrowSpriteRight2D.visible = true
+			arrowRightX = arrowX
+			arrowRightY = arrowY
 	#if $ArrowSpriteLeft2D.		
 	$ArrowSpriteLeft2D.rotation_degrees = arrowDirection
 	$ArrowSpriteRight2D.rotation_degrees = arrowDirection
