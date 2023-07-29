@@ -41,6 +41,7 @@ offset_bottom = 23.0
 text = "Right Side"
 
 [node name="ScoreLabel" type="Label" parent="."]
+self_modulate = Color(0.729412, 0.729412, 0.729412, 1)
 offset_top = 138.0
 offset_right = 40.0
 offset_bottom = 161.0

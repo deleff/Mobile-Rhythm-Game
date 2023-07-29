@@ -203,7 +203,7 @@ func _on_beat_timer_timeout():
 	if playerScore > highScore:
 		highScore = playerScore
 		_save_score(highScore)
-	$ScoreLabel.text = "Score: {playerScore}, High Score: {highScore}".format({"playerScore":playerScore, "highScore": highScore})
+	$ScoreLabel.text = "Your Score: {playerScore},     High Score: {highScore}".format({"playerScore":playerScore, "highScore": highScore})
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
