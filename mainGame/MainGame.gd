@@ -59,7 +59,7 @@ func _load_score():
 
 func _save_score(content):
 	var file = FileAccess.open(score_file, FileAccess.WRITE)
-	print("Saving new high score: ", highScore)
+	#print("Saving new high score: ", highScore)
 	file.store_var(content)
 
 func _on_effects_timer_timeout():
@@ -81,7 +81,7 @@ func _on_effects_timer_timeout():
 		beatTimer.stop()
 		$ArrowSpriteLeft2D.visible = false
 		$ArrowSpriteRight2D.visible = false
-	print("effectsIterator: ", effectsIterator)
+	#print("effectsIterator: ", effectsIterator)
 func _on_beat_timer_timeout():
 	## Get player input from last turn
 	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY or arrowLeftXPrevious == PersistentData.leftX and arrowLeftYPrevious == PersistentData.leftY and arrowRightXPrevious == PersistentData.rightX and arrowRightYPrevious == PersistentData.rightY:

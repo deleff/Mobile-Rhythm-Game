@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnqhwgdw6ce5u"]
+[gd_scene load_steps=6 format=3 uid="uid://cnqhwgdw6ce5u"]
 
 [ext_resource type="Script" path="res://mainGame/MainGame.gd" id="1_jefpd"]
 [ext_resource type="Texture2D" uid="uid://clx2p6v553bkt" path="res://sprites/arrow.png" id="2_to4y8"]
 [ext_resource type="PackedScene" uid="uid://ef2xdf2xefwo" path="res://controller.tscn" id="3_mxwu6"]
+[ext_resource type="FontFile" uid="uid://dvgyx6q46tjoa" path="res://fonts/Impact.ttf" id="4_e0jj8"]
 
 [sub_resource type="Environment" id="Environment_02xiq"]
 background_mode = 3
@@ -43,6 +44,7 @@ text = "Right Side"
 offset_top = 138.0
 offset_right = 40.0
 offset_bottom = 161.0
+theme_override_fonts/font = ExtResource("4_e0jj8")
 
 [node name="SongsAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
