@@ -65,8 +65,10 @@ func _on_beat_timer_timeout():
 	## Get player input from last turn
 	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
 		PersistentData.playerScore += 1
+		Input.vibrate_handheld(100)
 	elif arrowLeftXPrevious == PersistentData.leftX and arrowLeftYPrevious == PersistentData.leftY and arrowRightXPrevious == PersistentData.rightX and arrowRightYPrevious == PersistentData.rightY:
 		PersistentData.playerScore += 1
+		Input.vibrate_handheld(100)
 
 	print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
 	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
