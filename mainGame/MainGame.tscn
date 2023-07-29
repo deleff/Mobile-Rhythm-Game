@@ -44,5 +44,7 @@ offset_bottom = 161.0
 
 [node name="SongsAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
+[node name="SfxAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_02xiq")

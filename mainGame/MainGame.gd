@@ -18,23 +18,27 @@ var arrowRightXPrevious: String
 var arrowRightYPrevious: String
 
 var beatTimer = Timer.new()
-var introTimer = Timer.new()
+var effectsTimer = Timer.new()
+var effectsIterator: int = 0
 var randomNumberGenerator = RandomNumberGenerator.new()
+
+var encouragementSoundEffect
 
 var score_file = "user://highscore.save"
 var highScore
+var playerScore: int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$ArrowSpriteLeft2D.visible = false
 	$ArrowSpriteRight2D.visible = false
-	add_child(introTimer)
-	introTimer.one_shot = true
+	add_child(effectsTimer)
+	effectsTimer.one_shot = false
 	add_child(beatTimer)
 	beatTimer.one_shot = false
 	$SongsAudioStreamPlayer2D.stream = load("res://music/Heaven.mp3")
-	introTimer.start(15)
+	effectsTimer.start(1)
 	$SongsAudioStreamPlayer2D.play()
-	introTimer.timeout.connect(_on_intro_timer_timeout)
+	effectsTimer.timeout.connect(_on_effects_timer_timeout)
 	beatTimer.timeout.connect(_on_beat_timer_timeout)
 	$ArrowSpriteLeft2D.global_position.x = (get_viewport_rect().size.x / 3)
 	$ArrowSpriteLeft2D.global_position.y = (get_viewport_rect().size.y / 2)
@@ -58,17 +62,41 @@ func _save_score(content):
 	print("Saving new high score: ", highScore)
 	file.store_var(content)
 
-func _on_intro_timer_timeout():
-	beatTimer.start(0.435)
+func _on_effects_timer_timeout():
+	effectsIterator += 1
+	if effectsIterator == 15:
+		$SfxAudioStreamPlayer2D.stream = load("res://sfx/ready.mp3")
+		$SfxAudioStreamPlayer2D.play()
+	elif effectsIterator == 16:
+		beatTimer.start(0.435)
+	elif effectsIterator == 349:
+		if playerScore == highScore:
+			$SfxAudioStreamPlayer2D.stream = load("res://sfx/new_record.mp3")
+		else:
+			$SfxAudioStreamPlayer2D.stream = load("res://sfx/complete.mp3")
+		$SfxAudioStreamPlayer2D.play()
+		beatTimer.stop()
 	
 func _on_beat_timer_timeout():
 	## Get player input from last turn
-	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY:
-		PersistentData.playerScore += 1
-		Input.vibrate_handheld(100)
-	elif arrowLeftXPrevious == PersistentData.leftX and arrowLeftYPrevious == PersistentData.leftY and arrowRightXPrevious == PersistentData.rightX and arrowRightYPrevious == PersistentData.rightY:
-		PersistentData.playerScore += 1
-		Input.vibrate_handheld(100)
+	if arrowLeftX == PersistentData.leftX and arrowLeftY == PersistentData.leftY and arrowRightX == PersistentData.rightX and arrowRightY == PersistentData.rightY or arrowLeftXPrevious == PersistentData.leftX and arrowLeftYPrevious == PersistentData.leftY and arrowRightXPrevious == PersistentData.rightX and arrowRightYPrevious == PersistentData.rightY:
+		playerScore += 1
+		Input.vibrate_handheld(50)
+		if playerScore % 6 == 0:
+			randomNumberGenerator.randomize()
+			encouragementSoundEffect = randomNumberGenerator.randi_range(0,3)
+			match encouragementSoundEffect:
+				0:
+					$SfxAudioStreamPlayer2D.stream = load("res://sfx/congratulations.mp3")
+				1:
+					$SfxAudioStreamPlayer2D.stream = load("res://sfx/no_contest.mp3")
+				2:
+					$SfxAudioStreamPlayer2D.stream = load("res://sfx/success.mp3")
+				3:
+					$SfxAudioStreamPlayer2D.stream = load("res://sfx/wow.mp3")
+			$SfxAudioStreamPlayer2D.play()
+
+
 
 	print("Left arrow: ", arrowLeftX, ", ", arrowLeftY)
 	print("Right arrow: ", arrowRightX, ", ", arrowRightY)
@@ -169,10 +197,10 @@ func _on_beat_timer_timeout():
 	
 	arrowChoicePrevious = arrowChoice	
 	## Update and display the score
-	if PersistentData.playerScore > highScore:
-		highScore = PersistentData.playerScore
+	if playerScore > highScore:
+		highScore = playerScore
 		_save_score(highScore)
-	$ScoreLabel.text = "Score: {playerScore}, High Score: {highScore}".format({"playerScore":PersistentData.playerScore, "highScore": highScore})
+	$ScoreLabel.text = "Score: {playerScore}, High Score: {highScore}".format({"playerScore":playerScore, "highScore": highScore})
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
